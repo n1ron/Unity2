@@ -9,7 +9,7 @@ namespace Geekbrains
 		private Vector3 _vecOffset;
 		public float BatteryChargeCurrent { get; private set; }
 		[SerializeField] private float _speed = 10;
-		[SerializeField] private float _batteryChargeMax;
+		[SerializeField] private float _batteryChargeMax = 5;
 
 		protected override void Awake()
 		{
