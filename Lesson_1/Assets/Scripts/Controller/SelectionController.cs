@@ -21,11 +21,12 @@ namespace Geekbrains
 
         public void OnUpdate()
         {
-            if(Physics.Raycast(_ray, out _hit, _selectionDistance))
+            if (Physics.Raycast(_ray, out _hit, _selectionDistance))
             {
-               _selectionUi.Text = _hit.transform.ToString();
+                _selectionUi.SetActive(true);
+                _selectionUi.Text = _hit.transform.ToString();
             }
-            //Debug.DrawRay(_camera.transform.position, _center);
+            else _selectionUi.SetActive(false);
         }      
     }
 }
