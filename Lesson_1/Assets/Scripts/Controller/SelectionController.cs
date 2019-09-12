@@ -2,16 +2,18 @@
 
 namespace Geekbrains
 {
-    public sealed class SelectionController : BaseController, IOnUpdate//, IInitialization
+    public sealed class SelectionController : BaseController, IOnUpdate, IInitialization
     {
+        private SelectionUi _selectionUi;
         private Ray _ray;
         private Vector2 _center;
-        private float _selectionDistance = 10;
+        private float _selectionDistance = 100;
         private RaycastHit _hit;
         private Camera _camera;
 
-        public SelectionController()
+        public void Init()
         {
+            _selectionUi = Object.FindObjectOfType<SelectionUi>();
             _center = new Vector2(Screen.width/2, Screen.height/2);
             _camera = Camera.main;
             _ray = _camera.ScreenPointToRay(_center);
@@ -21,13 +23,10 @@ namespace Geekbrains
         {
             if(Physics.Raycast(_ray, out _hit, _selectionDistance))
             {
-                var selection = _hit.transform;
-                var selectionName = selection.GetComponent<PropertyName>();
-                Debug.Log(selectionName);
+               _selectionUi.Text = _hit.transform.ToString();
             }
-        }
-
-        //надо инициализировать UI
+            //Debug.DrawRay(_camera.transform.position, _center);
+        }      
     }
 }
 

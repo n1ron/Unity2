@@ -39,6 +39,7 @@ namespace Geekbrains
 		private void Start()
 		{
 			FlashLightController.Init();
+            SelectionController.Init();
 			InputController.On();
 		}
 
