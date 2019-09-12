@@ -34,4 +34,4 @@ namespace Geekbrains
 			Transform = transform;
 		}
 	}
-}
+} 

@@ -10,6 +10,7 @@ namespace Geekbrains
 		public FlashLightController FlashLightController { get; private set; }
 		public InputController InputController { get; private set; }
 		public PlayerController PlayerController { get; private set; }
+        public SelectionController SelectionController { get; private set; }
 
 		private readonly List<IOnUpdate> _updates = new List<IOnUpdate>();
 		private Transform Player;
@@ -30,7 +31,10 @@ namespace Geekbrains
 
 			InputController = new InputController();
 			_updates.Add(InputController);
-		}
+
+            SelectionController = new SelectionController();
+            _updates.Add(SelectionController);
+        }
 
 		private void Start()
 		{
