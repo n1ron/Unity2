@@ -6,13 +6,15 @@ namespace Geekbrains
 {
 	public class Main : MonoBehaviour
 	{
-		public FlashLightController FlashLightController { get; private set; }
+        [SerializeField] private GameObject _objectPooler;
+        public FlashLightController FlashLightController { get; private set; }
 		public InputController InputController { get; private set; }
 		public PlayerController PlayerController { get; private set; }
 		public WeaponController WeaponController { get; private set; }
 		public SelectionController SelectionController { get; private set; }
 		public Inventory Inventory { get; private set; }
-		public Transform Player { get; private set; }
+        public ObjectPooler ObjectPooler { get; private set; }
+        public Transform Player { get; private set; }
 		public Transform MainCamera { get; private set; }
 		private IOnUpdate[] _controllers;
 
@@ -26,9 +28,9 @@ namespace Geekbrains
 			Player = GameObject.FindGameObjectWithTag("Player").transform;
 
 			Inventory = new Inventory();
+            ObjectPooler = _objectPooler.GetComponent<ObjectPooler>();
 			
-			PlayerController = new PlayerController(new UnitMotor(
-				GameObject.FindObjectOfType<CharacterController>().transform));
+			PlayerController = new PlayerController(new UnitMotor(GameObject.FindObjectOfType<CharacterController>().transform));
 			FlashLightController = new FlashLightController();
 			InputController = new InputController();
 			WeaponController = new WeaponController();
@@ -49,6 +51,7 @@ namespace Geekbrains
 		private void Start()
 		{
 			Inventory.OnStart();
+            ObjectPooler.OnStart();
 			FlashLightController.OnStart();
 			PlayerController.On();
 			InputController.On();

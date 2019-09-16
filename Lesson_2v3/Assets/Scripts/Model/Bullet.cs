@@ -12,8 +12,7 @@
 				tempObj.SetDamage(new InfoCollision(_curDamage, Rigidbody.velocity));
 			}
 
-            DestroyAmmunition();
-			// Вернуть в пул
-		}
+            Main.Instance.ObjectPooler.ResetObjectFromPool(this);
+        }
 	}
 }
