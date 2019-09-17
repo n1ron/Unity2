@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 namespace Geekbrains
 {
@@ -32,8 +33,9 @@ namespace Geekbrains
         public Ammunition TakeFromPool (AmmunitionType ammunitionType, Vector3 position, Quaternion rotation)
         {
             if (!_poolDictionary.ContainsKey(ammunitionType)) return null;
-
             Ammunition obj = _poolDictionary[ammunitionType].Dequeue();
+            if (obj.isActiveAndEnabled) ResetObjectFromPool(obj);
+
             obj.SetActive(true);
             obj.transform.position = position;
             obj.transform.rotation = rotation;
@@ -52,11 +54,6 @@ namespace Geekbrains
             obj.transform.position = _transform.position;
             obj.transform.rotation = _transform.rotation;
             obj.StopLosingDamage();
-        }
-
-        public void ResetObjectInTime(Ammunition obj, float timeToReset) //не получается инвок, вероятно, поэтому пули летят странно
-        {
-            Invoke(nameof(ResetObjectFromPool), timeToReset);
         }
     }
 }

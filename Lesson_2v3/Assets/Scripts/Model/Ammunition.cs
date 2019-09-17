@@ -15,7 +15,7 @@ namespace Geekbrains
         {
             _curDamage = _baseDamage;
             InvokeRepeating(nameof(LossOfDamage), 0, 1);
-            Main.Instance.ObjectPooler.ResetObjectInTime(this, _timeToReset);
+            Invoke(nameof(ResetAmmunition), _timeToReset);
         }
 
 		public void AddForce(Vector3 dir)
@@ -32,6 +32,11 @@ namespace Geekbrains
         public void StopLosingDamage()
         {
             CancelInvoke(nameof(LossOfDamage));
+        }
+
+        public void ResetAmmunition()
+        {
+            Main.Instance.ObjectPooler.ResetObjectFromPool(this);
         }
     }
 }
