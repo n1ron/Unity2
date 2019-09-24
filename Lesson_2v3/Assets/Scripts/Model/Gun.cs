@@ -1,15 +1,16 @@
-﻿
+﻿using UnityEngine;
+
 namespace Geekbrains
 {
-	public sealed class Gun : Weapon
+	public class Gun : Weapon
 	{
-		public override void Fire()
+		public sealed override void Fire()
 		{
 			if (!_isReady) return;
 			if (Clip.CountAmmunition <= 0) return;
 			if (!Ammunition) return;
-			var temAmmunition = Instantiate(Ammunition, _barrel.position, _barrel.rotation);//todo Pool object
-			temAmmunition.AddForce(_barrel.forward * _force);
+			var temAmmunition = Main.Instance.ObjectPooler.TakeFromPool(Ammunition.Type, _barrel.position, _barrel.rotation);
+			temAmmunition.AddForce(AddDeviation(_barrel.forward, _deviation) * _force);
 			Clip.CountAmmunition--;
 			_isReady = false;
 			Invoke(nameof(ReadyShoot), _rechergeTime);

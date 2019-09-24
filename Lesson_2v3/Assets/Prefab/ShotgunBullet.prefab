@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 607181374497758089}
   - component: {fileID: 302777892539440303}
   - component: {fileID: -8635747403301240229}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ShotgunBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,6 +61,15 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: 56023753c23ece546bfaddf594188a13, type: 2}
+  - {fileID: 2100000, guid: 56023753c23ece546bfaddf594188a13, type: 2}
+  - {fileID: 2100000, guid: 56023753c23ece546bfaddf594188a13, type: 2}
+  - {fileID: 2100000, guid: 56023753c23ece546bfaddf594188a13, type: 2}
+  - {fileID: 2100000, guid: 56023753c23ece546bfaddf594188a13, type: 2}
+  - {fileID: 2100000, guid: 56023753c23ece546bfaddf594188a13, type: 2}
+  - {fileID: 2100000, guid: 56023753c23ece546bfaddf594188a13, type: 2}
+  - {fileID: 2100000, guid: 56023753c23ece546bfaddf594188a13, type: 2}
+  - {fileID: 2100000, guid: 56023753c23ece546bfaddf594188a13, type: 2}
   - {fileID: 2100000, guid: 56023753c23ece546bfaddf594188a13, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -124,8 +133,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Rigidbody: {fileID: 0}
-  _timeToDestruct: 10
-  _baseDamage: 10
+  _timeToReset: 5
+  _baseDamage: 12
   Type: 4
 --- !u!1 &6585420648893291224
 GameObject:
@@ -137,7 +146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1684588138353429547}
   - component: {fileID: 8075673119820857706}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +185,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9b90c8dad62467445b29ca37f19bd849, type: 2}
+  - {fileID: 2100000, guid: 56023753c23ece546bfaddf594188a13, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

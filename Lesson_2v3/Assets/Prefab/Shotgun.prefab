@@ -46,11 +46,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Rigidbody: {fileID: 0}
+  _bulletsInClip: 30
+  _countClip: 5
   Ammunition: {fileID: 8901952978020707258, guid: 5ba333170968389429e3ec2ef5ff2807,
     type: 3}
-  _barrel: {fileID: 0}
+  _barrel: {fileID: 7271983973706905554}
   _force: 9999
   _rechergeTime: 0.2
+  _deviation: 0.01
 --- !u!1 &3209330237393570595
 GameObject:
   m_ObjectHideFlags: 0

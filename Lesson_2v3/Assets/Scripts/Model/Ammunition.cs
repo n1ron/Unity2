@@ -4,25 +4,19 @@ namespace Geekbrains
 {
 	public abstract class Ammunition : BaseObjectScene
 	{
-		[SerializeField] protected float _timeToDestruct = 10;
+		[SerializeField] protected float _timeToReset = 5;
 		[SerializeField] protected float _baseDamage = 10;
-		protected float _curDamage;
+        protected float _curDamage;
 		protected float _lossOfDamageAtTime = 0.2f;
 
 		public AmmunitionType Type = AmmunitionType.Bullet;
 
-		protected override void Awake()
-		{
-			base.Awake();
-			_curDamage = _baseDamage;
-		}
-
-		private void Start()
-		{
-            // Вернуть в пул
-            DestroyAmmunition(_timeToDestruct);
+        public void LoadAmmunition()
+        {
+            _curDamage = _baseDamage;
             InvokeRepeating(nameof(LossOfDamage), 0, 1);
-		}
+            Invoke(nameof(ResetAmmunition), _timeToReset);
+        }
 
 		public void AddForce(Vector3 dir)
 		{
@@ -30,15 +24,19 @@ namespace Geekbrains
 			Rigidbody.AddForce(dir);
 		}
 
-		protected void LossOfDamage()
-		{
-			_curDamage -= _lossOfDamageAtTime;
-		}
-
-        protected void DestroyAmmunition(float timeToDestruct = 0)
+        protected void LossOfDamage()
         {
-            Destroy(gameObject, timeToDestruct);
+            _curDamage -= _lossOfDamageAtTime;
+        }
+
+        public void StopLosingDamage()
+        {
             CancelInvoke(nameof(LossOfDamage));
         }
-	}
+
+        public void ResetAmmunition()
+        {
+            Main.Instance.ObjectPooler.ResetObjectFromPool(this);
+        }
+    }
 }
