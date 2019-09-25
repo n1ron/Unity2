@@ -29,7 +29,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             _points = new Queue<Transform>();
         }
 
-
         private void Update()
         {
             if (_points.Count > 0)
@@ -40,11 +39,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             if (target != null)
                 agent.SetDestination(target.position);
 
-
 	        character.Move(agent.remainingDistance > agent.stoppingDistance ? agent.desiredVelocity : Vector3.zero,
 		        false, false);
         }
-
 
         public void SetTarget(Transform target)
         {

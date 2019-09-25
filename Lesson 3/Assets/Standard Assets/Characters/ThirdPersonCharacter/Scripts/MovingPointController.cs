@@ -10,14 +10,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         
         void Start()
         {
-            _movingPoints = Camera.main.GetComponent<MovingPoints>();
-            _listOfColliders = new List<AICharacterControl>();
-            
+            _movingPoints = Camera.main.GetComponent<MovingPoints>();            
         }
 
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider other)
         {
-            var temp = collision.gameObject.GetComponent<AICharacterControl>();
+            var temp = other.gameObject.GetComponent<AICharacterControl>();
             temp.DequeueTarget();
             _listOfColliders.Remove(temp);
             if (_listOfColliders.Count == 0) Destroy(gameObject);
@@ -25,10 +23,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
         public void GetList(List<AICharacterControl> list)
         {
-            foreach (var ai in list)
-            {
-                if (ai != null) _listOfColliders.Add(ai);
-            }
+            _listOfColliders = new List<AICharacterControl>(list);
         }
     }
 }
