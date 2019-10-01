@@ -12,9 +12,9 @@ namespace Geekbrains
 		public Transform Target { get; set; }
 		public NavMeshAgent Agent { get; private set; }
 		private float _waitTime = 3;
-        private float _alertTimer = 1.5f;
+        private float _alertTimer = 1.5f; //время перехода из режима alerted в detected
         private float _curAlertTime = 0;
-        private float _attantionTimer = 3f;
+        private float _attantionTimer = 7f; //время, которое противник продолжает искать, потеряв врага из вида
         private float _curAttentionTime = 0;
         private StateBot _stateBot;
 		private Vector3 _point;
@@ -86,7 +86,7 @@ namespace Geekbrains
 
             if (StateBot == StateBot.Detected)
             {
-                MovePoint(Target.position);
+                MovePoint(Target.position); 
                 Agent.stoppingDistance = 2;
                 if (Vision.VisionM(transform, Target))
                 {
@@ -98,8 +98,9 @@ namespace Geekbrains
                 }
                 if (_curAttentionTime <= 0)
                 {
-                    StateBot = StateBot.Patrol;
-                    _curAlertTime = _alertTimer; //разобраться как устроен маршрут и почему по нему не идет
+                    StateBot = StateBot.Non;
+                    Agent.ResetPath();
+                    _curAlertTime = _alertTimer;
                 }                   
                 return;
             }
