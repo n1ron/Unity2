@@ -5,7 +5,7 @@ namespace Geekbrains
 	[System.Serializable]
 	public sealed class Vision
 	{
-		public float ActiveDis = 10;
+		public float ActiveDis = 15;
 		public float ActiveAng = 35;
 
 		public bool VisionM(Transform player, Transform target)
@@ -27,8 +27,8 @@ namespace Geekbrains
 
 		private bool Dist(Transform player, Transform target)
 		{ 
-			var dist = Vector3.Distance(player.position, target.position); //todo оптимизация
-			return dist <= ActiveDis;
+			var dist = Vector3.Distance(player.position, target.position); //todo оптимизация - ответ: я почитал форумы и посмотрел тесты и пришел к выводу, что нет смысла менять distance на sqrMagnitude или magnitude
+            return dist <= ActiveDis;
 		}
 	}
 }

@@ -8,14 +8,15 @@ namespace Geekbrains
 	{
 		public int CountBot = 0;
 		public HashSet<Bot> GetBotList { get; } = new HashSet<Bot>();
+        public Transform Spawner;
 
 		public void OnStart()
 		{
 			for (var index = 0; index < CountBot; index++)
 			{
 				var tempBot = Object.Instantiate(Main.Instance.RefBotPrefab,
-					Patrol.GenericPoint(Main.Instance.Player),
-					Quaternion.identity);
+					Patrol.GenericPoint(Spawner),
+                    Quaternion.identity);
 
 				tempBot.Agent.avoidancePriority = index;
 				tempBot.Target = Main.Instance.Player; //todo разных противников

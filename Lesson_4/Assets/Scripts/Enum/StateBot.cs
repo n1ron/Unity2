@@ -6,6 +6,7 @@
 		Patrol,
 		Inspection,
 		Detected,
+        Alerted,
 		Died
 	}
 }

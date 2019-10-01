@@ -1,26 +1,27 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Geekbrains
 {
-	public class Main : MonoBehaviour
-	{
-		public FlashLightController FlashLightController { get; private set; }
-		public InputController InputController { get; private set; }
-		public PlayerController PlayerController { get; private set; }
-		public WeaponController WeaponController { get; private set; }
-		public SelectionController SelectionController { get; private set; }
-		public BotController BotController { get; private set; }
-		public Inventory Inventory { get; private set; }
-		public Transform Player { get; private set; }
-		public Transform MainCamera { get; private set; }
-		private IOnUpdate[] _controllers;
+    public class Main : MonoBehaviour
+    {
+        public FlashLightController FlashLightController { get; private set; }
+        public InputController InputController { get; private set; }
+        public PlayerController PlayerController { get; private set; }
+        public WeaponController WeaponController { get; private set; }
+        public SelectionController SelectionController { get; private set; }
+        public BotController BotController { get; private set; }
+        public Inventory Inventory { get; private set; }
+        public Transform Player { get; private set; }
+        public Transform MainCamera { get; private set; }
+        private IOnUpdate[] _controllers;
 
-		public static Main Instance { get; private set; }
-		public Bot RefBotPrefab;
+        public static Main Instance { get; private set; }
+        public Bot RefBotPrefab;
+        [SerializeField] private int _botCount = 0;
+        [SerializeField] private Transform _spawnPoint; 
 
-		private void Awake()
+        private void Awake()
 		{
 			Instance = this;
 
@@ -57,6 +58,8 @@ namespace Geekbrains
 			FlashLightController.OnStart();
 			PlayerController.On();
 			InputController.On();
+            BotController.CountBot = _botCount;
+            BotController.Spawner = _spawnPoint;
             BotController.OnStart();
             BotController.On();
         }

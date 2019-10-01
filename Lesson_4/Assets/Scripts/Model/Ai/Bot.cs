@@ -12,7 +12,11 @@ namespace Geekbrains
 		public Transform Target { get; set; }
 		public NavMeshAgent Agent { get; private set; }
 		private float _waitTime = 3;
-		private StateBot _stateBot;
+        private float _alertTimer = 1.5f;
+        private float _curAlertTime = 0;
+        private float _attantionTimer = 3f;
+        private float _curAttentionTime = 0;
+        private StateBot _stateBot;
 		private Vector3 _point;
 
         public event Action<Bot> OnDieChange;
@@ -37,14 +41,16 @@ namespace Geekbrains
 					case StateBot.Detected:
                         Color = Color.red;
                         break;
-					case StateBot.Died:
+                    case StateBot.Alerted:
+                        Color = Color.cyan;
+                        break;
+                    case StateBot.Died:
                         Color = Color.gray;
                         break;
 					default:
                         Color = Color.white;
                         break;
 				}
-
 			}
 		}
 
@@ -52,7 +58,9 @@ namespace Geekbrains
 		{
 			base.Awake();
 			Agent = GetComponent<NavMeshAgent>();
-		}
+            _curAlertTime = _alertTimer;
+            _curAttentionTime = _attantionTimer;
+        }
 
         private void OnEnable()
         {
@@ -76,7 +84,27 @@ namespace Geekbrains
 		{
 			if (StateBot == StateBot.Died) return;
 
-			if (StateBot != StateBot.Detected)
+            if (StateBot == StateBot.Detected)
+            {
+                MovePoint(Target.position);
+                Agent.stoppingDistance = 2;
+                if (Vision.VisionM(transform, Target))
+                {
+                    Weapon.Fire();
+                }
+                if (!Vision.VisionM(transform, Target))
+                {
+                    _curAttentionTime -= Time.deltaTime;
+                }
+                if (_curAttentionTime <= 0)
+                {
+                    StateBot = StateBot.Patrol;
+                    _curAlertTime = _alertTimer; //разобраться как устроен маршрут и почему по нему не идет
+                }                   
+                return;
+            }
+
+            if (StateBot != StateBot.Alerted)
 			{
 				if (!Agent.hasPath)
 				{
@@ -102,27 +130,28 @@ namespace Geekbrains
 
 				if (Vision.VisionM(transform, Target))
 				{
-					StateBot = StateBot.Detected;
+					StateBot = StateBot.Alerted;
 				}
 			}
 			else
 			{
-                MovePoint(Target.position);
-				Agent.stoppingDistance = 2;
-				if (Vision.VisionM(transform, Target))
-				{
-                    //todo остановиться 
-                    Weapon.Fire();
-				}
-
-                //todo Потеря персонажа
+                if (_curAlertTime <= 0)
+                {
+                    _curAttentionTime = _attantionTimer;
+                    StateBot = StateBot.Detected;
+                }
+                else
+                {
+                    _curAlertTime -= Time.deltaTime;
+                }
             }
         }
 
 		public void SetDamage(InfoCollision info)
 		{
-            //todo реакциия на попадание  
-			if (Hp > 0)
+            StateBot = StateBot.Alerted; //todo реакциия на попадание - готово
+
+            if (Hp > 0)
 			{
 				Hp -= info.Damage;
 			}
