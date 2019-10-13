@@ -4,7 +4,13 @@ namespace Geekbrains.Editor.Test
 {
 	public class MenuItems
 	{
-		[MenuItem("Geekbrains/Пункт меню №0 ")]
+        [MenuItem("Norin's menu/Custom inspector")]
+        private static void PersonalMenuOption()
+        {
+            EditorWindow.GetWindow(typeof(MyWindow), false, "Custom inspector");
+        }
+
+        [MenuItem("Geekbrains/Пункт меню №0 ")]
 		private static void MenuOption()
 		{
 			EditorWindow.GetWindow(typeof(MyWindow), false, "Geekbrains");
